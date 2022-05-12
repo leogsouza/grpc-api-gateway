@@ -1,0 +1,30 @@
+@host = http://localhost:3000
+
+POST {{host}}/auth/register
+Content-Type: application/json
+{
+  "email": "elon@musk.com",
+  "password": "12345678"
+}
+### Login auth
+# @name authLogin
+POST {{host}}/auth/login HTTP/1.1
+Content-Type: application/json
+
+{
+  "email": "elon@musk.com",
+  "password": "12345678"
+}
+
+@token={{authLogin.response.body.$.token}}
+
+###
+POST {{host}}/product
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "name": "Product A",
+  "stock": 5,
+  "price": 15
+}
